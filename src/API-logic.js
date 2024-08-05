@@ -1,16 +1,20 @@
+// eslint-disable-next-line import/no-named-as-default, import/no-named-as-default-member
+import { writeError, removeError } from './writeError';
+
 async function fetchData(location) {
     try {
         const request = await fetch(
             `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=metric&key=K2P6BZW4ZVHGB3PFD3HXLMC64&contentType=json`,
         );
         if (!request.ok) {
-            throw new Error('Please put in a City');
+            throw new Error('Please put in a valid city name');
         }
         const data = await request.json();
+        removeError();
         return data;
     } catch (error) {
-        console.log(error);
-        return error;
+        writeError(error);
+        return null;
     }
 }
 function processData(data) {
@@ -35,13 +39,13 @@ function processData(data) {
         snowdepth: data.currentConditions.snowdepth,
     };
 }
-
 async function getData(loc) {
     let data = await fetchData(loc);
     if (!data) {
         console.log(`no data: ${data}`);
         return null;
     }
+
     data = processData(data);
     console.log(data);
     return data;

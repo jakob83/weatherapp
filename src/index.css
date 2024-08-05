@@ -8,8 +8,6 @@
 p {
     margin: 0;
 }
-body {
-}
 .main {
     height: 100%;
     display: grid;
@@ -56,9 +54,11 @@ body {
 .search {
     grid-column: 1/-1;
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     gap: 10px;
+    position: relative;
 }
 
 .search input {
@@ -77,6 +77,10 @@ body {
     border-radius: 10px;
     color: #324b4f;
     transition: all 0.15s;
+}
+.search .error-msg {
+    color: red;
+    font-size: 1.2rem;
 }
 .search button:hover {
     background-color: rgb(78, 194, 209);
@@ -188,5 +192,8 @@ body {
         grid-row: 4/5;
         margin: 0;
         overflow: scroll;
+    }
+    .search .error-msg {
+        align-self: flex-start;
     }
 }

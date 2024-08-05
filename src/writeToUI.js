@@ -78,6 +78,7 @@ function writeForecast(data, { dayElements }) {
 }
 
 function writeToUI(data) {
+    if (!data) return;
     const iconElement = document.querySelector('.overview img');
     const url = getIconURL(data.icon, iconOptions);
     iconElement.src = url;

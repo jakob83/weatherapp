@@ -1,0 +1,192 @@
+:root > * {
+    font-size: 16px;
+    padding: 0;
+    margin: 0;
+    background-color: #324b4f;
+}
+
+p {
+    margin: 0;
+}
+body {
+}
+.main {
+    height: 100%;
+    display: grid;
+    grid-template-rows: 1.5fr 4fr 3fr;
+    grid-template-columns: 5fr max(30%, 300px);
+    position: relative;
+    padding: 0 10%;
+    column-gap: 70px;
+    row-gap: 40px;
+}
+.heading {
+    position: absolute;
+    left: 10%;
+    top: 20px;
+    font-size: 3rem;
+    color: #2ca9bc;
+}
+.overview {
+    display: flex;
+    gap: 40px;
+    grid-row: 2 / 3;
+    font-size: 3rem;
+    background-color: #47d2af;
+    border-radius: 20px;
+    justify-content: center;
+    padding-top: 10%;
+}
+.stats {
+    grid-row: 2/3;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: #47d2af;
+    padding: 20px 40px;
+    border-radius: 20px;
+}
+.forecast {
+    background-color: #47d2af;
+    grid-row: 3/4;
+    grid-column: 1/-1;
+    padding: 40px 40px;
+    border-radius: 20px;
+}
+.search {
+    grid-column: 1/-1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.search input {
+    font-size: 1.3rem;
+    padding: 5px 20px;
+    border: none;
+    border-bottom: 1px solid black;
+    outline: none;
+    background-color: rgba(0, 0, 0, 0);
+}
+.search button {
+    font-size: 1.3rem;
+    padding: 10px 20px;
+    background-color: #2ca9bc;
+    border: none;
+    border-radius: 10px;
+    color: #324b4f;
+    transition: all 0.15s;
+}
+.search button:hover {
+    background-color: rgb(78, 194, 209);
+}
+
+.feels-like {
+    font-size: 1.7rem;
+}
+.general {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.overview img {
+    height: 200px;
+    width: 200px;
+}
+.overview .location {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.overview .location .description {
+    font-size: 1.5rem;
+}
+.stats svg {
+    width: 60px;
+}
+.stats .stat {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    grid-template-rows: 45px 15px;
+    column-gap: 20px;
+}
+.stat svg {
+    grid-column: 1/-1;
+    grid-row: 1/2;
+}
+.stat .p {
+    grid-column: 2/-1;
+    grid-row: 1/2;
+    font-size: 1.7rem;
+}
+.stat p {
+    grid-column: 2/-1;
+}
+.stat > * {
+    display: flex;
+    align-items: center;
+}
+.forecast .days {
+    display: flex;
+    gap: 10px;
+    overflow-x: scroll;
+}
+.forecast .day-cont {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 120px 1fr;
+    background-color: #324b4f;
+    height: 200px;
+    min-width: 200px;
+    flex: 1;
+    font-size: 1.3rem;
+}
+.forecast .day-cont img {
+    height: 100px;
+}
+.day-cont .img-cont {
+    grid-column: 1/-1;
+    grid-row: 2/3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.day-cont .min-cont,
+.day-cont .max-cont {
+    grid-row: 3/4;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    align-items: center;
+}
+.day-cont svg {
+    height: 35px;
+}
+.day-cont .date {
+    grid-column: 1/-1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+@media screen and (max-width: 1225px) {
+    .main {
+        height: 100%;
+        display: grid;
+        grid-template-rows: 2fr 3fr 3fr 3fr;
+        grid-template-columns: 1fr;
+        padding: 0;
+        row-gap: 40px;
+    }
+    .stats {
+        grid-row: 3/4;
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    .forecast {
+        grid-row: 4/5;
+        margin: 0;
+        overflow: scroll;
+    }
+}

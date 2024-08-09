@@ -1,10 +1,10 @@
 // eslint-disable-next-line import/no-named-as-default, import/no-named-as-default-member
 import { writeError, removeError } from './writeError';
 
-async function fetchData(location) {
+async function fetchData(location, unit) {
     try {
         const request = await fetch(
-            `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=metric&key=K2P6BZW4ZVHGB3PFD3HXLMC64&contentType=json`,
+            `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=${unit}&key=K2P6BZW4ZVHGB3PFD3HXLMC64&contentType=json`,
         );
         if (!request.ok) {
             throw new Error('Please put in a valid city name');
@@ -39,8 +39,12 @@ function processData(data) {
         snowdepth: data.currentConditions.snowdepth,
     };
 }
-async function getData(loc) {
-    let data = await fetchData(loc);
+let currentData;
+function getCurrentData() {
+    return currentData;
+}
+async function getData(loc, unit = 'metric') {
+    let data = await fetchData(loc, unit);
     if (!data) {
         console.log(`no data: ${data}`);
         return null;
@@ -48,6 +52,7 @@ async function getData(loc) {
 
     data = processData(data);
     console.log(data);
+    currentData = data;
     return data;
 }
-export default getData;
+export { getCurrentData, getData };

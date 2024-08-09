@@ -196,4 +196,13 @@ p {
     .search .error-msg {
         align-self: flex-start;
     }
+    .unit {
+        right: 0;
+    }
+}
+.unit {
+    position: absolute;
+    right: 10%;
+    top: 50px;
+    z-index: 999999;
 }

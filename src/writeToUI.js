@@ -12,6 +12,7 @@ import tornado from './icons/tornado.svg';
 import cloudy from './icons/cloudy.svg';
 import fog from './icons/fog.svg';
 import hail from './icons/hail.svg';
+import { getCurrentUnit } from './toggleUnit';
 
 const { isTomorrow } = require('date-fns');
 
@@ -42,11 +43,12 @@ function getIconURL(iconName, options) {
 function writeOverview(
     { temp, feelslike, locArray },
     { tempP, locExactP, locDescP, feelsLikeP },
+    unit,
 ) {
-    tempP.innerText = `${temp}°C`;
-    feelsLikeP.innerText = `feels like: ${feelslike}°C`;
+    tempP.innerText = `${temp}°${unit}`;
+    feelsLikeP.innerText = `feels like: ${feelslike}°${unit}`;
     locExactP.innerText = `${locArray[0]}`;
-    locDescP.innerText = `${locArray[1]}, ${locArray[2] || ''}`;
+    locDescP.innerText = `${locArray[1] || ''}, ${locArray[2] || ''}`;
 }
 function writeStats(
     { humidity, windspeed, sunrise, sunset, snowdepth },
@@ -55,10 +57,15 @@ function writeStats(
     humidityP.innerText = `${humidity}%`;
     windspeedP.innerText = `${windspeed}KmH`;
     snowP.innerText = `${snowdepth}cm`;
-    sunriseP.innerText = sunrise.split(':').slice(0, 2).join(':');
-    sunsetP.innerText = sunset.split(':').slice(0, 2).join(':');
+    if (!sunrise || !sunset) {
+        sunriseP.innerText = 'not available';
+        sunsetP.innerText = 'not available';
+    } else {
+        sunriseP.innerText = sunrise.split(':').slice(0, 2).join(':');
+        sunsetP.innerText = sunset.split(':').slice(0, 2).join(':');
+    }
 }
-function writeForecast(data, { dayElements }) {
+function writeForecast(data, { dayElements }, unit) {
     for (let i = 0; i < dayElements.length; i += 1) {
         const dayElement = dayElements[i];
         const minElement = dayElement.querySelector('.min');
@@ -67,9 +74,9 @@ function writeForecast(data, { dayElements }) {
         const dateElement = dayElement.querySelector('.date');
         const url = getIconURL(data.days[i].icon, iconOptions);
         const minTemp = data.days[i].tempmin;
-        minElement.innerText = `${minTemp}°C`;
+        minElement.innerText = `${minTemp}°${unit}`;
         const maxTemp = data.days[i].tempmax;
-        maxElement.innerText = `${maxTemp}°C`;
+        maxElement.innerText = `${maxTemp}°${unit}`;
         imgElement.src = url;
         dateElement.innerText = isTomorrow(data.days[i].datetime)
             ? 'Tomorrow'
@@ -96,9 +103,9 @@ function writeToUI(data) {
             document.querySelectorAll('.forecast .days .day-cont'),
         ),
     };
-    writeOverview(data, paragraphs);
+    writeOverview(data, paragraphs, getCurrentUnit());
     writeStats(data, paragraphs);
-    writeForecast(data, paragraphs);
+    writeForecast(data, paragraphs, getCurrentUnit());
 }
 
 export default writeToUI;
